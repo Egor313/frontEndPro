@@ -1,5 +1,6 @@
-const actions = ['+', '-', '*', '/'];
-const action = prompt('Введіть оператор (+, -, *, /):');
+const actions = {'+': add, '-': sub, '*': mul, '/': div};
+const actionsList = Object.keys(actions);
+const action = prompt(`Введіть оператор ${actionsList.join(', ')} :`);
 
 
 if (!isValidAction(action)) {
@@ -13,17 +14,25 @@ if (!isValidAction(action)) {
     alert('Неправильний операнд');
   } else {
     const result = calc(action, operandA, operandB);
-    showResult(action, operandA, operandB, result);
+
+    if (isFinite(result)) {
+      showResult(action, operandA, operandB, result);
+    } else {
+      alert('Ділення на 0');
+    }
   }
 }
 
 
 function isValidAction(action) {
-    return actions.includes(action);
+    return actionsList.includes(action);
 }
 
 function getOperand(operandName) {
+
     return Number(prompt(`Введіть операнд ${operandName}:`));
+    
+
 }
 
 function isOperandValid(operand) {
@@ -47,25 +56,8 @@ function div(a, b) {
 }  
 
 function calc(action, a, b) {
-    let result;
-  
-    switch (action) {
-      case '+':
-        result = add(a, b);
-        break;
-      case '-':
-        result = sub(a, b);
-        break;
-      case '*':
-        result = mul(a, b);
-        break;
-      case '/':
-        result = div(a, b);
-        break;
-    }
-  
-    return result;
-  }
+  return actions[action](a, b);
+}
 
 function showResult(action, a, b, result) {
     alert(`${a} ${action} ${b} = ${result}`);
