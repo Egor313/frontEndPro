@@ -1,15 +1,6 @@
 //№1
 // Вивести на сторінку в один рядок через кому числа від 10 до 20.
 
-let numberString = '';
-
-for (let i = 10; i <= 20; i++) {
-    numberString += i + ', '; 
-}
-console.log(numberString);
-
-||
-
 let numbersArr = [];
 
 for (let i = 10; i <= 20; i++) {
