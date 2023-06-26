@@ -1,4 +1,3 @@
-
 const students = [
     {
       id: 10,
@@ -22,6 +21,10 @@ const students = [
     }
   ];
 
+  console.log(averageStudentMark(15));
+  console.log(averageGroupMark(students));
+
+
 function averageStudentMark (id) {
     const student = students.find((student) => student.id === id);
 
@@ -41,7 +44,3 @@ function averageGroupMark(students) {
 
     return averageMark;
 }
-
-
-console.log(averageStudentMark(id));
-console.log(averageGroupMark(students));
