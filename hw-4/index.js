@@ -90,3 +90,50 @@ for (let i = start; i <= end; i++) {
         console.log(i);
     }
 }
+
+//№9
+// Дано натуральне число. Знайти та вивести на сторінку всі його дільники. 
+
+const n = 7;
+
+for ( let i = 0; i <= n; i++) {
+    if (n % i === 0) {
+        console.log(i);
+    }
+}
+
+//№10
+// Визначити кількість його парних дільників.
+
+let evenNum = 0;
+const j = 12;
+
+for (let i = 0; i <= j; i++) {
+    if ( j % i === 0 && i % 2 === 0) {
+        evenNum += 1;
+    }
+}
+console.log(evenNum);
+
+//№11
+// Знайти суму його парних дільників.
+
+let sum = 0;
+const n = 10;
+
+for (let i = 0; i <= n; i++) {
+    if (n % i === 0 && i % 2 === 0) {
+        sum += 1;
+    }
+}
+console.log(sum);
+
+//№12
+// Надрукувати повну таблицю множення від 1 до 10.
+
+for (let i = 1; i <= 10; i++) {
+    for (let j = 1; j <= 10; j++) {
+        console.log(`${i} x ${j} = ${i * j}`);
+    }
+    console.log(' ');
+}
