@@ -21,7 +21,7 @@ const students = [
     }
   ];
 
-  console.log(averageStudentMark(15));
+  console.log(averageStudentMark(11));
   console.log(averageGroupMark(students));
 
 
@@ -31,16 +31,22 @@ function averageStudentMark (id) {
     if (!student) {
         return `Not found student with this Id. Try another Id.`
     }
-    const sumOfMarks = student.marks.reduce((acc, mark) => acc + mark, 0);
-    const averageMark = sumOfMarks / student.marks.length;
 
-    return averageMark;
+    return arrAverage(student.marks);
 }
 
 function averageGroupMark(students) {
     const allMarks = students.reduce((acc, student) => acc.concat(student.marks), []);
-    const sumOfStudentMarks = allMarks.reduce((total, num) => total + num, 0);
-    const averageMark = sumOfStudentMarks / allMarks.length;
 
-    return averageMark;
+    return arrAverage(allMarks);
+}
+
+function arrAverage (arr) {
+    const sum = arr.reduce(add);
+
+    return sum / arr.length;
+}
+
+function add (a, b) {
+    return a + b;
 }
