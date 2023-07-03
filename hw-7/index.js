@@ -6,7 +6,7 @@ const questions = [
     },
     {
         question: 'Путин - хуйло',
-        answer: 'true',
+        answer: true,
         type: 'confirm',
     },
     {
@@ -21,7 +21,7 @@ const questions = [
     },
     {
         question: 'Снесли ли памятник Екатерине-2 в Одессе?',
-        answer: 'true',
+        answer: true,
         type: 'confirm',
     },
     {
@@ -41,17 +41,17 @@ const questions = [
     },
     {
         question: 'Нужно ли сжигать сосийский флаг?',
-        answer: 'true',
+        answer: true,
         type: 'confirm',
     },
     {
         question: 'Поддерживаете ли вы уход иностранных компаний из московии?',
-        answer: 'true',
+        answer: true,
         type: 'confirm',
     },
     {
         question: 'Считаете ли вы сосию своим домом?',
-        answer: 'false',
+        answer: false,
         type: 'confirm',
     },
 ];
@@ -68,8 +68,18 @@ function askQuestion(question) {
         userAnswer = askConfirmQuestion(question.question);
     }
 
-    if (userAnswer === question.answer) {
+    if(isAnswerCorrect(userAnswer, question.answer)) {
         score += 10;
+    }
+    
+    
+}
+
+function isAnswerCorrect(userAnswer, correctAnswer) {
+    if (typeof correctAnswer === 'boolean') {
+        return Boolean(userAnswer) === correctAnswer;
+    } else {
+        return userAnswer.toLowerCase() === correctAnswer.toLowerCase();
     }
 }
 
@@ -78,8 +88,7 @@ function runCheck() {
     for (let i = 0; i < questions.length; i++) {
         askQuestion(questions[i]);
     }
-
-     if (score >= 70 && score <= 100) {
+     if (score >= 70 && score <= 110) {
         alert(`Результат: ${score} очков. Поздравляю!`);
     } else if (score >= 40 && score < 70) {
         alert(`Результат: ${score} очков. Ты можешь лучше. Попробуй еще раз!`);
@@ -96,3 +105,4 @@ function askPromptQuestion(questionText) {
 function askConfirmQuestion(questionText) {
     return confirm(questionText);
 }
+
