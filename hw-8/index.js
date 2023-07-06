@@ -34,7 +34,6 @@ function createCalculator(baseValue) {
       },
       reset: () => {
         result = baseValue;
-        console.log(`Значення скинуто до базового значення: ${baseValue}`);
       },
       set: (newValue) => {
         if (isValidNumber(newValue)) {
