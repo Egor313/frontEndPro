@@ -15,34 +15,36 @@ console.log(calculator.get());
 
 
 function createCalculator(baseValue) {
-    let result = baseValue;
+    let num = 0;
 
-    function isValidNumber(num) {
-        return typeof num === 'number' && !isNaN(num);
+    if(isValidNumber(baseValue)) {
+        num = baseValue
     }
      
     return {
-      add: (num) => {
-        if (isValidNumber(num)) {
-          result += num;  
+      add: (n) => {
+        if (isValidNumber(n)) {
+            num += n;  
         }
       },
-      sub: (num) => {
-        if (isValidNumber(num)) {
-          result -= num;
+      sub: (n) => {
+        if (isValidNumber(n)) {
+            num -= n;
         }
       },
       reset: () => {
-        result = baseValue;
+        num = baseValue;
       },
-      set: (newValue) => {
-        if (isValidNumber(newValue)) {
-            result = newValue;
+      set: (n) => {
+        if (isValidNumber(n)) {
+            num = n;
         }
       },
-      get: () => {
-        return result;
-      }
+      get: () => num,
     };
   }
-  
+
+  function isValidNumber(num) {
+    return typeof num === 'number' && !isNaN(num);
+ }
+ 
