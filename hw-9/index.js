@@ -1,7 +1,7 @@
 'use strict'
 
 function Calculator(base) {
-   this.base = base;
+   this.base = isValidNumber(base) ? base : 0;
    this.num = isValidNumber(base) ? base : 0;
 
    this.add = function(n) {
@@ -22,14 +22,12 @@ function Calculator(base) {
        }
    };
 
-   this.reset = function() { {
+   this.reset = function() {
        this.num = this.base;
-       }
    };
 
-   this.get = function() { {
+   this.get = function() {
        return this.num;
-       }
    };
 }
 
