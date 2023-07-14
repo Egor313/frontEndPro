@@ -2,38 +2,35 @@
 
 function Calculator(base) {
    this.base = isValidNumber(base) ? base : 0;
-   this.num = isValidNumber(base) ? base : 0;
-
-   this.add = function(n) {
-       if (isValidNumber(n)) {
-           this.num += n;
-       }
-   };
-
-   this.sub = function(n) {
-       if (isValidNumber(n)) {
-           this.num -= n;
-       }
-   };
-
-   this.set = function(n) {
-       if (isValidNumber(n)) {
-           this.num = n;
-       }
-   };
-
-   this.reset = function() {
-       this.num = this.base;
-   };
-
-   this.get = function() {
-       return this.num;
-   };
+   this.num = this.base;
 }
 
-function isValidNumber(num) {
-   return typeof num === 'number' && !isNaN(num);
-}
+Calculator.prototype.add = function(n) {
+    if (isValidNumber(n)) {
+        this.num += n;
+    }
+};
+
+Calculator.prototype.sub = function(n) {
+    if (isValidNumber(n)) {
+        this.num -= n;
+    }
+};
+
+Calculator.prototype.set = function(n) {
+    if (isValidNumber(n)) {
+        this.num = n;
+    }
+};
+
+Calculator.prototype.reset = function() {
+    this.num = this.base;
+};
+
+Calculator.prototype.get = function() {
+    return this.num;
+};
+
 
 const calculator = new Calculator(100);
 
