@@ -1,20 +1,37 @@
-const [ul, btn, inputText] = [
+const [ul, btn, input] = [
     document.querySelector('#todoList'),
     document.querySelector('#msgButton'),
     document.querySelector('#msgInput'),
   ];
   
-  btn.addEventListener('click', onButtonClick);
+  btn.addEventListener('click', onMsgBtnClick);
   
-  function onButtonClick() {
-    const newItemText = inputText.value.trim();
-    if (newItemText === '') {
-      return;
+  function onMsgBtnClick() {
+    const todo = getTodoData();
+
+    if (!isTodoValid(todo)) {
+        alert('Поле сообщение не должно быть пустым');
+        return;
     }
-  
-    const newItem = document.createElement('li');
-    newItem.textContent = newItemText;
-    ul.append(newItem);
-    inputText.value = '';
+
+    renderTodo(todo)
+    clear()
+  }
+   
+  function getTodoData () {
+    return { message: input.value.trim()}
   }
   
+  function isTodoValid (todo) {
+    return todo.message !== '';
+  }
+  function renderTodo (todo) {
+    const newItem = document.createElement('li');
+    newItem.textContent = todo.message;
+    ul.append(newItem);
+  }
+
+  function clear() {
+    input.value = '';
+  }
+
