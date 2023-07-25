@@ -1,17 +1,16 @@
 'use strict'
+  
+const table = document.querySelector('#tableMain');
+const nameInput = document.querySelector('#nameInput');
+const surnameInput = document.querySelector('#surnameInput');
+const phoneInput = document.querySelector('#phoneInput');
+const addBtn = document.querySelector('#addBtn');
 
-const [table, nameInput, surnameInput, phoneInput, addBtn] = [
-    document.querySelector('#tableMain'),
-    document.querySelector('#nameInput'),
-    document.querySelector('#surnameInput'),
-    document.querySelector('#phoneInput'),
-    document.querySelector('#addBtn'),
-  ];
+
+addBtn.addEventListener('click', onBtnClick);
+table.addEventListener('click', onTrClick);
   
-  addBtn.addEventListener('click', onBtnClick);
-  table.addEventListener('click', onTrClick);
-  
-  function onBtnClick() {
+function onBtnClick() {
     const todo = getTodoData();
   
     if(!isTodoValid(todo)) {
@@ -23,7 +22,7 @@ const [table, nameInput, surnameInput, phoneInput, addBtn] = [
   
   }
   
-  function getTodoData() {
+function getTodoData() {
     return { 
       name: nameInput.value.trim(),
       surname: surnameInput.value.trim(),
@@ -31,11 +30,11 @@ const [table, nameInput, surnameInput, phoneInput, addBtn] = [
     };
   }
   
-  function isTodoValid(todo) {
+function isTodoValid(todo) {
     return todo.name !== '' && todo.surname !== '' && (!isNaN(todo.phone) && (todo.phone.length >= 10 && todo.phone.length <= 12));
   }
   
-  function renderTodo(todo) {
+function renderTodo(todo) {
     const newRowHTML = `
     <tr class='todoItem'>
         <td>${todo.name}</td>
@@ -48,13 +47,13 @@ const [table, nameInput, surnameInput, phoneInput, addBtn] = [
     table.insertAdjacentHTML('beforeend', newRowHTML);
   }
   
-  function clear() {
+function clear() {
     nameInput.value = '';
     surnameInput.value = '';
     phoneInput.value = '';
   }
   
-  function onTrClick(e) {
+function onTrClick(e) {
     const tr = e.target.closest('.todoItem');
   
     if(tr) {

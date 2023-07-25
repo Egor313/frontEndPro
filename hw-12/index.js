@@ -1,12 +1,12 @@
-const [ul, btn, input] = [
-    document.querySelector('#todoList'),
-    document.querySelector('#msgButton'),
-    document.querySelector('#msgInput'),
-  ];
+'use strict'
+
+const ul = document.querySelector('#todoList');
+const btn = document.querySelector('#msgButton');
+const input = document.querySelector('#msgInput');
   
-  btn.addEventListener('click', onMsgBtnClick);
+btn.addEventListener('click', onMsgBtnClick);
   
-  function onMsgBtnClick() {
+function onMsgBtnClick() {
     const todo = getTodoData();
 
     if (!isTodoValid(todo)) {
@@ -16,22 +16,22 @@ const [ul, btn, input] = [
 
     renderTodo(todo)
     clear()
-  }
+}
    
-  function getTodoData () {
-    return { message: input.value.trim()}
-  }
+function getTodoData () {
+  return { message: input.value.trim()}
+}
   
-  function isTodoValid (todo) {
-    return todo.message !== '';
-  }
-  function renderTodo (todo) {
+function isTodoValid (todo) {
+  return todo.message !== '';
+}
+function renderTodo (todo) {
     const newItem = document.createElement('li');
     newItem.textContent = todo.message;
     ul.append(newItem);
-  }
+}
 
-  function clear() {
+function clear() {
     input.value = '';
-  }
+}
 
