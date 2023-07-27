@@ -1,64 +1,62 @@
 'use strict'
-  
-const table = document.querySelector('#tableMain');
-const nameInput = document.querySelector('#nameInput');
-const surnameInput = document.querySelector('#surnameInput');
-const phoneInput = document.querySelector('#phoneInput');
-const addBtn = document.querySelector('#addBtn');
+
+const DELETE_BTN_CLASS = 'deleteBtn';
+const CONTACT_ITEM_CLASS = 'contactItem';
+const CONTACT_FORM = 'contactForm';
+const CONTACT_LIST = 'contactList';
+
+const form = document.querySelector(`#${CONTACT_FORM}`);
+const contactList = document.querySelector(`#${CONTACT_LIST}`);
 
 
-addBtn.addEventListener('click', onBtnClick);
-table.addEventListener('click', onTrClick);
+form.addEventListener('submit', onFormSubmit);
+contactList.addEventListener('click', onContactListClick);
+
+function onFormSubmit(e) {
+    e.preventDefault();
+
+    const formElements = form.elements;
+    const contact = getFormData(formElements);
   
-function onBtnClick() {
-    const todo = getTodoData();
-  
-    if(!isTodoValid(todo)) {
-      alert('Будь ласка, заповніть всі поля коректно!');
+    if(!isContactValid(contact)) {
+      showError('Будь ласка, заповніть всі поля коректно!');
       return;
     }
-    renderTodo(todo);
-    clear();
-  
+
+    renderContact(contact);
+    clearFormData(formElements);
+
+ 
   }
+    
+function onContactListClick(e) {
+    const contactEl = getContactItem(e.target)
   
-function getTodoData() {
-    return { 
-      name: nameInput.value.trim(),
-      surname: surnameInput.value.trim(),
-      phone: phoneInput.value.trim() 
-    };
-  }
-  
-function isTodoValid(todo) {
-    return todo.name !== '' && todo.surname !== '' && (!isNaN(todo.phone) && (todo.phone.length >= 10 && todo.phone.length <= 12));
-  }
-  
-function renderTodo(todo) {
-    const newRowHTML = `
-    <tr class='todoItem'>
-        <td>${todo.name}</td>
-        <td>${todo.surname}</td>
-        <td>${todo.phone}</td>
-        <td><button class='deleteBtn'>Видалити</button></td>
-    </tr>
-   `;
-  
-    table.insertAdjacentHTML('beforeend', newRowHTML);
-  }
-  
-function clear() {
-    nameInput.value = '';
-    surnameInput.value = '';
-    phoneInput.value = '';
-  }
-  
-function onTrClick(e) {
-    const tr = e.target.closest('.todoItem');
-  
-    if(tr) {
-      if (e.target.classList.contains('deleteBtn')) {
-        tr.remove();
-      }
+    if (contactEl && e.target.classList.contains(DELETE_BTN_CLASS)) {
+        removeContact(contactEl)
     }
   }
+
+function removeContact(el) {
+    el.remove()
+}
+
+
+function isContactValid (contact) {
+    return !isEmpty(contact.name)
+        && !isEmpty(contact.surname)
+        && !isEmpty(contact.phone)
+        && isValidNumber(Number(contact.phone))
+}
+  
+
+function renderContact (contact) {
+    const newRowHTML = generateTemplate(contact);
+
+    contactList.insertAdjacentHTML('beforeend', newRowHTML)
+}
+
+function getContactItem(el) {
+    return el.closest(`.${CONTACT_ITEM_CLASS}`);
+  }
+
