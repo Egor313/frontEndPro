@@ -5,21 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>homeWork13</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="../lib/isValidation/isEmpty.js" defer></script>
+    <script src="../lib/isValidation/isValidNumber.js" defer></script>
+    <script src="../lib/form/getFormData.js" defer></script>
+    <script src="../lib/form/clearFormData.js" defer></script>
+    <script src="../lib/showError.js" defer></script>
+    <script src="../lib/generateTemplate.js" defer></script>
     <script src="./index.js" defer></script>
 
 </head>
 <body>
-    <table id="tableMain">
-        <tr>
-            <th>Ім'я</th>
-            <th>Призвіще</th>
-            <th>Номер телефону</th>
-            <th>Дії</th>
-        </tr>
-    </table>
-        <input id="nameInput" type="text" placeholder="Ім'я">
-        <input id="surnameInput" type="text" placeholder="Призвіще">
-        <input id="phoneInput" type="number" placeholder="Номер телефону (10 цифр)">
-        <button id="addBtn">Додати</button>
+    <form id="contactForm" class="form">
+        <table id="tableMain">
+            <tr>
+                <th>Ім'я</th>
+                <th>Призвіще</th>
+                <th>Номер телефону</th>
+                <th>Дії</th>
+            </tr>
+
+            <tbody id="contactList"></tbody>
+
+            <tr>
+                <td><input id="name" type="text" placeholder="Ім'я"></td>
+                <td><input id="surname" type="text" placeholder="Призвіще"></td>
+                <td><input id="phone" type="text" placeholder="Номер телефону"></td>
+                <td><button id="addBtn" type="submit">Додати</button></td>
+            </tr>
+        </table>
+    </form>
+
 </body>
 </html> 
