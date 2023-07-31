@@ -1,21 +1,25 @@
 'use strict'
 
+const FORM_SELECTOR = '#todoForm';
+const TODO_LIST = '#todoList';
+const CHECKBOX_CLASS = 'checkbox';
 const DELETE_BTN_CLASS = 'delete_btn';
 const TODO_ITEM_CLASS = 'todo__item';
-const TODO_LIST = 'todoList';
-const MSG_BUTTON = 'msgButton';
-const INPUT_AREA = 'inputArea';
-const CHECKBOX_CLASS = 'checkbox';
 
-const todoList = document.querySelector(`#${TODO_LIST}`);
-const msgButton = document.querySelector(`#${MSG_BUTTON}`);
-const input = document.querySelector(`#${INPUT_AREA}`);
+
+const form = document.querySelector(FORM_SELECTOR);
+const todoList = document.querySelector(TODO_LIST);
+
   
-msgButton.addEventListener('click', onMsgBtnClick);
+form.addEventListener('submit', onFormSubmit);
 todoList.addEventListener('click', onTodoListClick);
   
-function onMsgBtnClick() {
-    const todo = getTodoData();
+
+function onFormSubmit(e) {
+    e.preventDefault();
+
+    const formElements = form.elements;
+    const todo = getFormData(formElements);
 
     if (!isTodoValid(todo)) {
         showError('Будь ласка, заповніть всі поля коректно!');
@@ -23,26 +27,20 @@ function onMsgBtnClick() {
     }
 
     renderTodo(todo)
-    clear()
+    clearFormData(formElements)
 }
 
 function onTodoListClick(e) {
     const todoEl = getTodoItem(e.target);
-    const classListEl = e.target.classList;
 
     if(todoEl) {
-        if (classListEl.contains(DELETE_BTN_CLASS)) {
+        if (isDeleteBtn(e.target)) {
             removeTodo(todoEl)
-        } else if (classListEl.contains(CHECKBOX_CLASS)) {
-            todoEl.classList.toggle(CHECKBOX_CLASS, e.target.checked)
+        } else if (isChecked(e.target)) {
+            toggleCheckBox(todoEl)
         }
     }
 }
-  
-function getTodoData () {
-  return { message: input.value}
-}
-
   
 function isTodoValid (todo) {
   return  !isEmpty(todo.message);
@@ -65,16 +63,25 @@ function generateTemplate(todo) {
     `;
 }
 
-function clear() {
-    input.value = '';
+function getTodoItem(el) {
+    return el.closest(`.${TODO_ITEM_CLASS}`)
+}
+
+function isDeleteBtn(el) {
+    return el.closest(`.${DELETE_BTN_CLASS}`)
 }
 
 function removeTodo(el) {
     el.remove()
 }
 
-function getTodoItem(el) {
-    return el.closest(`.${TODO_ITEM_CLASS}`)
+function isChecked(el) {
+    return el.closest(`.${CHECKBOX_CLASS}`)
 }
+
+function toggleCheckBox(el) {
+    return el.classList.toggle(CHECKBOX_CLASS)
+}
+
 
 
