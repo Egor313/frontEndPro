@@ -10,10 +10,11 @@ class AccordionTabs {
 
       this.navItems = Array.from(this.rootEl.querySelector('nav').children);
       this.contentItems = Array.from(this.rootEl.querySelector('div').children);
+      this.currentIndex = defaultOpenIndex;
   
       this.bindStyles();
       this.bindEvents();
-      this.openContentByIndex(defaultOpenIndex);
+      this.openContentByIndex(this.currentIndex);
     }
 
     
@@ -41,9 +42,13 @@ class AccordionTabs {
       }
     }
 
-    openContentByIndex(index) {
-        this.contentItems.forEach((contentItem, i) => {
-          contentItem.classList.toggle(AccordionTabs.ACTIVE_CLASS, i === index);
-        });
-      }
-  }
+      openContentByIndex(tabIndex) {
+        const contentEL = this.contentItems[this.currentIndex];
+        contentEL.classList.remove(AccordionTabs.ACTIVE_CLASS);
+
+        const newContentEl = this.contentItems[tabIndex];
+        newContentEl.classList.add(AccordionTabs.ACTIVE_CLASS);
+
+        this.currentIndex = tabIndex;
+    }
+}
