@@ -1,0 +1,24 @@
+.accordion-item-btn {
+    border: none;
+    background-color: rgb(217, 255, 0);
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+.accordion-item-btn:focus{
+    background-color:  rgb(255, 157, 0); 
+  }
+
+  
+.accordion-item-content {
+    display: none;
+    padding: 10px;
+   
+}
+
+.open {
+    display: block;
+    width: 400px;
+    height: 200px;
+    background-color: rgb(255, 157, 0);
+}
