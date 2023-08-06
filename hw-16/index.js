@@ -8,7 +8,7 @@ function onBtnClick() {
     const username = getUserInfo();
 
     if (isEmpty(username)) {
-        alert('Message field cannot be empty!');
+        alert('Поле введення не може бути порожнім!');
         return;
     }
 
@@ -17,7 +17,7 @@ function onBtnClick() {
            if(response.ok) {
                 return response.json();
             } else { 
-                showError(`Cannot fetch userInfo. Try again!`);
+                showError(`Неможливо знайти акаунт. Спробуйте ще раз!`);
             }
         })  
         .then(userData => {
@@ -25,7 +25,7 @@ function onBtnClick() {
 
         })
         .catch(error => {
-            console.log(`Cannot fetch account: ${error.message}`);
+            console.log(`${error.message}`);
         })
 
      clear();
