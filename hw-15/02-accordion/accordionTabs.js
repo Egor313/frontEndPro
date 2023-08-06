@@ -7,14 +7,14 @@ class AccordionTabs {
 
     constructor(rootEl, defaultOpenIndex = AccordionTabs.DEFAULT_OPEN_INDEX) {
       this.rootEl = rootEl;
+      const [navItems, contentItems] = this.rootEl.children
 
-      this.navItems = Array.from(this.rootEl.querySelector('nav').children);
-      this.contentItems = Array.from(this.rootEl.querySelector('div').children);
-      this.currentIndex = defaultOpenIndex;
+      this.navItems = Array.from(navItems.children);
+      this.contentItems = Array.from(contentItems.children);
   
       this.bindStyles();
       this.bindEvents();
-      this.openContentByIndex(this.currentIndex);
+      this.setActive(defaultOpenIndex);
     }
 
     
@@ -34,21 +34,37 @@ class AccordionTabs {
   
     onTabClick(e) {
       const target = e.target;
-      const isbtnClass = target.classList.contains(AccordionTabs.ACCORDION_ITEM_BTN_CLASS);
+      const navBtn = this.findNavItem(target)
   
-      if (isbtnClass) {
-        const index = this.navItems.indexOf(target);
-        this.openContentByIndex(index);
+      if (navBtn) {
+        const navBtnIndex = this.getNavIndex(navBtn);
+        
+        this.hideActive(this.currentIndex);
+        this.setActive(navBtnIndex);
       }
     }
 
-      openContentByIndex(tabIndex) {
-        const contentEL = this.contentItems[this.currentIndex];
-        contentEL.classList.remove(AccordionTabs.ACTIVE_CLASS);
+    findNavItem(el) {
+      return el.closest('.' + AccordionTabs.ACCORDION_ITEM_BTN_CLASS);
+    }
 
-        const newContentEl = this.contentItems[tabIndex];
-        newContentEl.classList.add(AccordionTabs.ACTIVE_CLASS);
+    getNavIndex(navBtn) {
+      return this.navItems.indexOf(navBtn);
+    }
 
-        this.currentIndex = tabIndex;
+    setActive(tabIndex) {
+      this.currentIndex = tabIndex;
+
+      this.navItems[tabIndex].classList.add(AccordionTabs.ACTIVE_CLASS);
+      this.contentItems[tabIndex].classList.add(AccordionTabs.ACTIVE_CLASS);
+    }
+
+    hideActive(tabIndex) {
+      this.navItems[tabIndex].classList.remove(AccordionTabs.ACTIVE_CLASS);
+      this.contentItems[tabIndex].classList.remove(AccordionTabs.ACTIVE_CLASS);
     }
 }
+
+
+
+
