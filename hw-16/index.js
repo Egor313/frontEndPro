@@ -1,53 +1,63 @@
-const btn = document.querySelector('#getGitAccBtn');
-const input = document.querySelector('#usernameInput');
+
+const form = document.querySelector('#userForm');
 const userInfo = document.querySelector('#userInfo');
 
-btn.addEventListener('click', onBtnClick)
+form.addEventListener('submit', onFormSubmit)
 
-function onBtnClick() {
-    const username = getUserInfo();
 
-    if (isEmpty(username)) {
-        alert('Поле введення не може бути порожнім!');
+function onFormSubmit(e) {
+    e.preventDefault();
+
+    const formElements = form.elements;
+    const user = getFormData(formElements)
+
+    if (!isUserValid(user)) {
+        showError('Invalid User data');
         return;
     }
 
-    fetch(`https://api.github.com/users/${username}`)
-        .then(response => {
-           if(response.ok) {
-                return response.json();
-            } else { 
-                showError(`Неможливо знайти акаунт. Спробуйте ще раз!`);
-            }
-        })  
-        .then(userData => {
-            renderUserInfo(userData);
-
+    findUser(user)
+        .then((foundUser) => {
+            renderUserInfo(foundUser);
+            clearFormData(formElements);
         })
         .catch(error => {
-            console.log(`${error.message}`);
+            showError(error.message);
         })
 
-     clear();
+
 }
 
-function getUserInfo() {
-    return input.value.trim()
+function isUserValid(user) {
+    return user.name !== '' && user.name.length > 2;
 }
 
-function renderUserInfo(userData) {
-    userInfo.innerHTML = generateUserInfo(userData);
+function findUser (user) {
+    return fetch(`https://api.github.com/users/${user.name}`)
+        .then(response => {
+            if(response.ok) {
+                    return response.json();
+                }
+
+            throw new Error(`${response.status} ${response.statusText}`);
+        })  
+        .catch((error) => {
+            throw new Error(`User not found: ${error.message}`);
+        })
+               
 }
 
-function generateUserInfo(user) {
+function renderUserInfo(user) {
+    userInfo.innerHTML = generateHtml(user);
+}
+
+function generateHtml(user) {
     return `
-        <img id="avatar" src="${user.avatar_url}" alt="Avatar">
-        <p id="reposCount">Number of repositories: ${user.public_repos}</p>
-        <p id="followersCount">Number of followers: ${user.followers}</p>
-        <p id="followingCount">Number of following: ${user.following}</p>
+        <div class='userInfoRow'>
+            <img id="avatar" src="${user.avatar_url}" alt="Avatar">
+            <p id="reposCount">Number of repositories: ${user.public_repos}</p>
+            <p id="followersCount">Number of followers: ${user.followers}</p>
+            <p id="followingCount">Number of following: ${user.following}</p>
+        </div>
     `
-}
-
-function clear() {
-    input.value = '';
 }
