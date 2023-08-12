@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Git Searcher</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="../lib/form/getFormData.js" defer></script>
+    <script src="../lib/form/clearFormData.js" defer></script>
     <script src="../lib/showError.js" defer></script>
-    <script src="../lib/isValidation/isEmpty.js" defer></script>
     <script src="./index.js" defer></script>
 
 </head>
 <body>
-    <div class="main-block">
-        <input type="text" id="usernameInput" placeholder="Enter Github Login">
-        <button id="getGitAccBtn">Find</button>  
-        <div id="userInfo"></div>
-    </div>
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Enter Github Login">
+        <button id="getGitAccBtn" type="submit">Find</button>  
+    </form>
+
+    <div id="userInfo"></div>
 </body>
 </html>
