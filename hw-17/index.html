@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TodoList Server</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script src="../lib/showError.js" defer></script>
-    <script src="../lib/isValidation/isEmpty.js" defer></script>
-    <script src="../lib/form/getFormData.js" defer></script>
-    <script src="../lib/form/clearFormData.js" defer></script>
-    <script src="./index.js" defer></script>
+    <script src="./index.js" type="module"></script>
 </head>
     <body>
         <ul id="todoList"></ul>
         
         <form id="todoForm">
             <div class="input__section">
-                <input id="title" type="text" placeholder="Введіть данні"/>
+                <input id="title" name="input" type="text" placeholder="Введіть данні"/>
                 <button type="submit" id="msgButton">Додати</button> 
             </div>
         </form>
