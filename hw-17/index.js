@@ -1,25 +1,39 @@
 'use strict'
+import { Api } from '../lib-api/Api.js';
+import { todoUrl } from '../lib-api/url.js';
+import { 
+    getFormData,
+    clearFormData,
+    isEmpty,
+    showError,
+} from '../lib-module/index.js';
+
 
 const FORM_SELECTOR = '#todoForm';
-const TODO_LIST = '#todoList';
-const CHECKBOX_CLASS = 'checkbox';
+const UL_SELECTOR = '#todoList';
+const DONE_CLASS = 'done';
 const DELETE_BTN_CLASS = 'delete_btn';
-const TODO_ITEM_CLASS = 'todo__item';
-const URL = 'https://mock-api-5678.nw.r.appspot.com/todos/';
+const TODO_ITEM_CLASS = 'todoItem';
 
+const todoApi = new Api(todoUrl);
 const form = document.querySelector(FORM_SELECTOR);
-const todoList = document.querySelector(TODO_LIST);
+const ul = document.querySelector(UL_SELECTOR);
+let todoList = [];
 
   
 form.addEventListener('submit', onFormSubmit);
-todoList.addEventListener('click', onTodoListClick);
+ul.addEventListener('click', onTodoListClick);
   
+init()
 
-getTodoList()
+function init() {
+    todoApi.getList()
     .then((list) => {
+        todoList = list
         renderTodoList(list)
     })
     .catch(e => showError(e.message))
+}
 
 
 function onFormSubmit(e) {
@@ -33,7 +47,7 @@ function onFormSubmit(e) {
         return;
     }
 
-    createTodo(todo)
+    todoApi.create(todo)
         .then((newTodo) => {
             renderTodo(newTodo)
             clearFormData(formElements)
@@ -44,28 +58,22 @@ function onFormSubmit(e) {
 
 function onTodoListClick(e) {
     const todoEl = getTodoItem(e.target);
-    const id = todoEl.dataset.id;
+    const id = Number(todoEl.dataset.id);
+    const todo = todoList.find((todoItem) => todoItem.id === id)
 
 
     if(todoEl) {
         if (isDeleteBtn(e.target)) {
-          deleteTodo(id)
+         todoApi.delete(id)
             .then(() => removeTodoEL(todoEl))
             .catch(e => showError(e.message))
-        } 
-        
-        if (isChecked(e.target)) {      
-            const currentIsChecked = isChecked(todoEl);
-            const updatedTodoData = { 
-                isChecked: !currentIsChecked,
-                title,
-            };
-            
+        } else {      
+            const newTodo = { ...todo, done: !todo.done};         
 
-            updateTodo(id, updatedTodoData)
-                .then((updatedTodoEl) => {
-                    updateTodoOnPage(updatedTodoEl)
-                    toggleCheckBox(todoEl)
+            todoApi.update(id, newTodo)
+                .then(() => {
+                    replaceTodoEl(todoEl, newTodo)
+                    todoList = todoList.map((todoItem) => todoItem.id === id ? newTodo : todoItem)
                 })
                 .catch(e => showError(e.message))
 
@@ -80,19 +88,22 @@ function isTodoValid (todo) {
 function renderTodoList(list) {
     const html = list.map(generateTemplate).join('');
 
-    todoList.innerHTML = html;
+    ul.innerHTML = html;
 }
 
 function renderTodo (todo) {
     const html = generateTemplate(todo);
 
-    todoList.insertAdjacentHTML('beforeend', html)
+    ul.insertAdjacentHTML('beforeend', html)
 }
 
 function generateTemplate(todo) {
+    const done = todo.done ? `${DONE_CLASS}` : '';
+
     return `
-        <li class='${TODO_ITEM_CLASS}' data-id='${todo.id}'>
-            <input type='checkbox' class='${CHECKBOX_CLASS}'>
+        <li 
+            class='todoItem ${done}' 
+            data-id='${todo.id}'>
             <span class='todo__message'>${todo.title}</span>
             <button class='${DELETE_BTN_CLASS}' type='button'>Видалити</button>
         </li>
@@ -111,95 +122,9 @@ function removeTodoEL(el) {
     el.remove()
 }
 
-function isChecked(el) {
-    return el.closest(`.${CHECKBOX_CLASS}`);
-}
 
-function toggleCheckBox(el) {
-    return el.classList.toggle(CHECKBOX_CLASS)
-}
+function replaceTodoEl(oldTodoEl, todo) {
+    const newTodoHTML = generateTemplate(todo)
 
-
-function getTodoList() {
-    return fetch(URL) 
-      .then((response) => {
-        if (response.ok) {
-            return response.json()
-        }
-
-        throw new Error(`${response.status} ${response.statusText}`);
-      })
-      .catch((error) => {
-        throw new Error(`Can not fetch todo list: ${error.message}`);
-      })
-}
-
-function createTodo(todo) {
-    return fetch(URL, {
-        method: 'POST',
-        body: JSON.stringify(todo),
-        headers: {
-            'Content-type': 'application/json',
-        }
-    }) 
-      .then((response) => {
-        if (response.ok) {
-            return response.json()
-        }
-
-        throw new Error(`${response.status} ${response.statusText}`);
-      })
-      .catch((error) => {
-        throw new Error(`Can not create todo: ${error.message}`);
-      })
-}
-
-function deleteTodo(id) {
-    return fetch(`${URL}${id}`, {
-        method: 'DELETE',
-    }) 
-      .then((response) => {
-        if (response.ok) {
-            return response.json()
-        }
-
-        throw new Error(`${response.status} ${response.statusText}`);
-      })
-      .catch((error) => {
-        throw new Error(`Can not delete todo: ${error.message}`);
-      })
-}
-
-function updateTodo(id, updatedTodoEl) {
-    return fetch(`${URL}${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(updatedTodoEl),
-        headers: {
-            'Content-type': 'application/json',
-        }
-    }) 
-      .then((response) => {
-        if (response.ok) {
-            return response.json()
-        }
-
-        throw new Error(`${response.status} ${response.statusText}`);
-      })
-      .catch((error) => {
-        throw new Error(`Can not update todo: ${error.message}`);
-      })
-}
-
-function updateTodoOnPage(updatedTodo) {
-    const todoEl = todoList.querySelector(`.${TODO_ITEM_CLASS}[data-id="${updatedTodo.id}"]`);
-
-    if (todoEl) {
-        const checkbox = todoEl.querySelector(`.${CHECKBOX_CLASS}`);
-        
-        checkbox.checked = updatedTodo.isChecked;
-
-        if (checkbox.classList.contains(CHECKBOX_CLASS) !== updatedTodo.isChecked) {
-            toggleCheckBox(todoEl);
-        }
-    }
+    oldTodoEl.outerHTML = newTodoHTML
 }

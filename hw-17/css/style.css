@@ -8,6 +8,7 @@ html {
     padding-left: 40px;
 }
 
+
 #msgButton, .delete_btn {
     background-color: #65edfa;
     color: #1f464d;
@@ -26,17 +27,17 @@ html {
 
 }
 
-.todo__item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    gap: 10px;
+.todoItem {
+    margin: 15px 0;
+    position: relative;
+}
+
+.todoItem.done .todo__message {
+    background-color: #10f69e;
+    font-weight: bold;
+
 }
 .todo__message {
     margin-right: 5px;
-}
-.checkbox:checked + .todo__message {
-    color: rgb(32, 33, 33);
-    background-color: #65edfa;
-    font-weight: bold;
+
 }

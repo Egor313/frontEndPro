@@ -1,0 +1,1 @@
+export const todoUrl = 'https://mock-api-5678.nw.r.appspot.com/todos/';
