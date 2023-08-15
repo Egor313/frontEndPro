@@ -43,6 +43,11 @@ function onFormSubmit(e) {
     const formElements = form.elements;
     const contact = getFormData(formElements);
     const editedContactId = form.getAttribute('data-edit-id');
+
+    if(!isContactValid(contact)) {
+        showError('Будь ласка, заповніть всі поля коректно!');
+        return;
+      }
   
     if (!isEmpty(editedContactId)) {
        contactsApi.update(editedContactId, contact)
@@ -54,12 +59,7 @@ function onFormSubmit(e) {
             })
             .catch(e => showError(e.message))
     } else {
-        if(!isContactValid(contact)) {
-            showError('Будь ласка, заповніть всі поля коректно!');
-            return;
-          }
-
-          contactsApi.create(contact)
+        contactsApi.create(contact)
           .then((newContact) => {
             renderContact(newContact);
             clearFormData(formElements);
@@ -81,11 +81,9 @@ function onContactListClick(e) {
             contactsApi.delete(id)
               .then(() => removeContactEL(contactEl))
               .catch(e => showError(e.message))
-        } else {
-            if (isEditBtn(el)) {
+        } else if (isEditBtn(el)){
                 form.setAttribute('data-edit-id', id);
                 formEdit(contact);
-            }
         }
     }
 
