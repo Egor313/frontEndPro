@@ -21,7 +21,7 @@ const api = new Api(waitersUrl);
 let waiterList = [];
 
 
-waitersContainer.addEventListener('click', onWaitersContainerClick);
+waiterContainer.addEventListener('click', onWaitersContainerClick);
 form.addEventListener('submit', onFormSubmit);
 
 init()
@@ -72,7 +72,7 @@ function onFormSubmit(e) {
     } else {
         api.create(waiter)
           .then((newWaiter) => {
-            renderList(newWaiter);
+            renderWaiter(newWaiter);
             clearFormData(formElements);
           })
           .catch(e => showError(e.message))
@@ -98,6 +98,12 @@ function findWaiterEl(el) {
 
 function renderList(waiters) {
     waiterContainer.innerHTML = waiters.map(generateWaiterHtml).join('');
+}
+
+function renderWaiter(waiter) {
+    const newHTML = generateWaiterHtml(waiter);
+
+    waiterContainer.insertAdjacentHTML('beforeend', newHTML) 
 }
 
 function generateWaiterHtml(waiter) {
