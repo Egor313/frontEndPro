@@ -31,7 +31,7 @@ function init() {
         renderList(list);
         waiterList = list;
     })
-    .catch(e => showError(e.message))
+    .catch(showError)
 }
 
 function onWaitersContainerClick(e) {
@@ -39,14 +39,17 @@ function onWaitersContainerClick(e) {
     const waiterEl = findWaiterEl(target)
     const id = Number(waiterEl?.dataset?.id)
 
-    if (id && isEditButtonClicked(target)) {
-        const waiter = getWaiterById(id)
-        fillFormInputs(inputs, waiter)
-    } else if (id && isDeleteBtnClicked(target)) {
-        api.delete(id)
-            .then(() => removeWaiterEL(waiterEl))
-            .catch(e => showError(e.message))
+    if (id) {
+        if (isEditButtonClicked(target)) {
+            const waiter = getWaiterById(id)
+            fillFormInputs(inputs, waiter)
+        } else if (isDeleteBtnClicked(target)) {
+            api.delete(id)
+                .then(() => deleteWaiterById(id))
+                .catch(showError)
+        } 
     }
+    
 }
 
 function onFormSubmit(e) {
@@ -71,8 +74,9 @@ function onFormSubmit(e) {
         .catch(e => showError(e.message))
     } else {
         api.create(waiter)
-          .then((newWaiter) => {
-            renderWaiter(newWaiter);
+          .then((newWaiterWithId) => {
+            addWaiterinList(newWaiterWithId);
+            renderWaiter(newWaiterWithId);
             clearFormData(formElements);
           })
           .catch(e => showError(e.message))
@@ -101,9 +105,7 @@ function renderList(waiters) {
 }
 
 function renderWaiter(waiter) {
-    const newHTML = generateWaiterHtml(waiter);
-
-    waiterContainer.insertAdjacentHTML('beforeend', newHTML) 
+    waiterContainer.insertAdjacentHTML('beforeend', generateWaiterHtml(waiter)) 
 }
 
 function generateWaiterHtml(waiter) {
@@ -140,12 +142,23 @@ function replaceWaiterInList(id, waiter) {
     waiterList = waiterList.map(c => c.id === Number(id) ? { ...waiter, id: Number(id)} : c)
 }
 
-function removeWaiterEL(el) {
-    el.remove()
+function addWaiterinList(waiter) {
+    waiterList.push(waiter)
 }
+
 
 function isDeleteBtnClicked(el) {
     return el.closest(`.${DELETE_BTN_CLASS}`)
+}
+
+function deleteWaiterById(id) {
+    const waiterEl = findwaiterElById(id)
+
+    if (waiterEl) {
+        waiterEl.remove()
+    } else {
+        throw new Error('Waiter element not found')
+    }
 }
 
 
