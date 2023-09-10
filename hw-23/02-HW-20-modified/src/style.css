@@ -45,13 +45,6 @@ th, td {
     margin-top: 25px;
 }
 
-
-
-#contactForm {
-    margin-top: 15px;
-    
-}
-
 .deleteBtn {
     background-color: #ebd009;
     color: #000;
@@ -80,4 +73,9 @@ th, td {
 
 .editBtn:hover {
     background-color: #97f806;
+}
+
+#contactForm {
+    margin-top: 15px;
+    
 }

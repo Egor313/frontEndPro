@@ -4,7 +4,6 @@ const WAITER_ITEM_CLASS = 'waiterItem';
 
 import styles from './ListView.m.css'
 
-
 export class ListView {
   constructor (options) {
     this.options = options
@@ -81,8 +80,8 @@ export class ListView {
       class="${WAITER_ITEM_CLASS}"
       data-id="${waiter.id}"
     >
-      <td class ='${styles.td}'>${waiter.firstName}</td>
-      <td class ='${styles.td}'>${waiter.phone}</td>
+      <td class="${styles.td}">${waiter.firstName}</td>
+      <td class="${styles.td}">${waiter.phone}</td>
       <td>
           <button class="${EDIT_BTN_CLASS}">[Edit]</button>
           <button class="${DELETE_BTN_CLASS}">[Delete]</button>

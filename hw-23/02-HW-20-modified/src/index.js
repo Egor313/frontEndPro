@@ -1,5 +1,5 @@
 import { Controller } from "./controller/Controller.js";
 
-import './style.css'
+import './style.css';
 
 new Controller(document.querySelector('#root'));
