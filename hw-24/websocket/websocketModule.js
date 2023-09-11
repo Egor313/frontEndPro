@@ -1,7 +1,9 @@
-export function initWebsocket() {
+import { initForm } from "./formModule.js";
+
+export function initWebsocket({ renderData }) {
 
     const ws = new WebSocket('ws://localhost:4000/chat');
-    const container = document.querySelector('.chatContainer')
+
 
     ws.onclose = function (event) {
         console.log('onclose', event)
@@ -16,16 +18,16 @@ export function initWebsocket() {
 
         try {
             const data = JSON.parse(event.data)
-            container.insertAdjacentHTML('beforeend', `<p>${data.username}: ${data.message}</p>`)
+            renderData(data, container)
         } catch (error) {
-            throw new Error('Error parsing JSON:' + error)
+            throw new Error(error)
         }
     }
     
-    ws.onopen = function (event) {
+    ws.onopen = function (event) {4
         console.log('onopen', event)
     
-        ws.send('New user connected')
+        ws.send('New user')
     }
 
     return ws;
