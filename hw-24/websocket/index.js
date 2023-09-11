@@ -3,4 +3,4 @@ import { initWebsocket } from "./websocketModule.js";
 
 
 const ws = initWebsocket({ renderData});
-initForm(ws)
+initForm({ onSubmit: (data) => ws.send(data) })

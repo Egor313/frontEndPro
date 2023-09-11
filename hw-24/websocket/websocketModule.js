@@ -18,16 +18,21 @@ export function initWebsocket({ renderData }) {
 
         try {
             const data = JSON.parse(event.data)
-            renderData(data, container)
+            renderData(data)
         } catch (error) {
             throw new Error(error)
         }
     }
     
     ws.onopen = function (event) {4
-        console.log('onopen', event)
+        console.log('onopen', event);
     
-        ws.send('New user')
+        const message = {
+            type: 'userConnected',
+            content: 'A new user has connected'
+        };
+
+        ws.send(JSON.stringify(message))
     }
 
     return ws;

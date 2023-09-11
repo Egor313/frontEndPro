@@ -3,10 +3,11 @@ import {
     showError,
   } from '../../lib-module/index.js'
 
+  const container = document.querySelector('.chatContainer')
+  const form = document.querySelector('#chatForm');
 
-  export function initForm(ws) {
-    const form = document.querySelector('#chatForm');
-    const container = document.querySelector('.chatContainer')
+
+  export function initForm({ onSubmit }) {
 
     form.addEventListener('submit', onFormSubmit);
 
@@ -22,7 +23,7 @@ import {
         }
 
         const data = JSON.stringify({ username, message });
-        ws.send(data);
+        onSubmit(data);
         clearFormInputs();
     }
 
