@@ -29,11 +29,6 @@ export function initWebsocket({ renderData }) {
     
     ws.onopen = function (event) {
         console.log('onopen', event);
-    
-        // const message = {
-        //     type: 'userConnected',
-        //     content: 'A new user has connected'
-        // };
 
         ws.send(JSON.stringify('A new user has connected'));
     }
