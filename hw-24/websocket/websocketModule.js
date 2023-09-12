@@ -1,4 +1,7 @@
-import { initForm } from "./formModule.js";
+import { 
+    initForm,
+    
+ } from "./formModule.js";
 
 export function initWebsocket({ renderData }) {
 
@@ -24,15 +27,15 @@ export function initWebsocket({ renderData }) {
         }
     }
     
-    ws.onopen = function (event) {4
+    ws.onopen = function (event) {
         console.log('onopen', event);
     
-        const message = {
-            type: 'userConnected',
-            content: 'A new user has connected'
-        };
+        // const message = {
+        //     type: 'userConnected',
+        //     content: 'A new user has connected'
+        // };
 
-        ws.send(JSON.stringify(message))
+        ws.send(JSON.stringify('A new user has connected'));
     }
 
     return ws;
