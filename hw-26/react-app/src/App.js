@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header } from './components/Header';
-import { Sidebar } from './components/Sidebar';
-import { Main } from './components/Main';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
 import './App.css';
 
 
 
-export default function App() {
+function App() {
   return (
     <div className="app">
       <Header />
@@ -17,3 +17,5 @@ export default function App() {
     </div>
   )
 }
+
+export default App;

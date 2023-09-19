@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Main() {
+function Main() {
     return (
         <main>
             <div>
@@ -10,3 +10,5 @@ export function Main() {
         </main>
     );
 }
+
+export default Main;

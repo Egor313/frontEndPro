@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Sidebar() {
+ function Sidebar() {
     return (
         <aside>
             <nav>
@@ -13,3 +13,5 @@ export function Sidebar() {
         </aside>
     );
 }
+
+export default Sidebar;
