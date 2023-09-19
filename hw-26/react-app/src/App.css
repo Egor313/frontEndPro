@@ -1,0 +1,20 @@
+.app {
+  text-align: center;
+  align-items: center;
+  
+}
+
+.content {
+  display: flex;
+}
+
+.sidebar {
+  flex: 40% ;
+  text-align: center;
+  background-color: blanchedalmond;
+}
+
+.main {
+  flex: 60%;
+  background-color: coral;
+}
