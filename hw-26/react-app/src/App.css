@@ -1,0 +1,22 @@
+.app {
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+  text-align: center;
+  background-color: blanchedalmond;
+}
+
+.main {
+
+  background-color: coral;
+}
+
