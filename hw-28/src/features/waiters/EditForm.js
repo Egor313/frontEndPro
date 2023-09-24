@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './EditForm.module.css'
+import { showError, isEmpty, isValidNumber } from '../../lib-module/index.js'
 
 export function EditForm ({ waiter, onWaiterSubmit }) {
   const [firstName, setFirstName] = React.useState('') 
@@ -14,6 +15,11 @@ export function EditForm ({ waiter, onWaiterSubmit }) {
 
   const onSubmit = (event) => {
     event.preventDefault()
+
+    if (!isDataValid(firstName, phone)) {
+      showError('Invalid form data');
+      return;
+    }
 
     onWaiterSubmit({
       ...waiter,
@@ -31,6 +37,12 @@ export function EditForm ({ waiter, onWaiterSubmit }) {
 
   const onPhoneChange = (event) => {
     setPhone(event.target.value) 
+  }
+
+  const isDataValid = (firstName, phone) => {
+    return !isEmpty(firstName)
+        && !isEmpty(phone)
+        && isValidNumber(Number(phone))
   }
 
   return (
