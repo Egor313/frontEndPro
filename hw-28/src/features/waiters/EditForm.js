@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './EditForm.module.css'
-import { showError, isEmpty, isValidNumber } from '../../lib-module/index.js'
+import { showError, isEmpty, isValidNumber } from '../../utils/index.js'
 
 export function EditForm ({ waiter, onWaiterSubmit }) {
   const [firstName, setFirstName] = React.useState('') 
