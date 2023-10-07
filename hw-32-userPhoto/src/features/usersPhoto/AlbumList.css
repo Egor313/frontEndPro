@@ -1,0 +1,10 @@
+  .album-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .album-list-item {
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
