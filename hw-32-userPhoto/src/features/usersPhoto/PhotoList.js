@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './PhotoList.css';
+import style from './PhotoList.css';
 
 export const PhotoList = () => {
   const { albumId } = useParams();
@@ -17,7 +17,7 @@ export const PhotoList = () => {
       <h1>Фотографії альбому</h1>
       <Link to={`/user/${albumId}/albums`}>Повернутися до списку альбомів</Link>
 
-      <ul className="photo-list">
+      <ul className={style["photo-list"]}>
         {photos.map((photo) => (
           <li key={photo.id}>
             <img src={photo.thumbnailUrl} alt={photo.title} />

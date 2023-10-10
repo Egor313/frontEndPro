@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './UserList.module.css';
+import style from './UserList.module.css';
 
 export const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -14,7 +14,7 @@ export const UserList = () => {
   return (
     <div>
       <h1>Список користувачів</h1>
-      <ul className="user-list">
+      <ul className={style["user-list"]}>
         {users.map((user) => (
           <li key={user.id}>
             {user.name}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './AlbumList.css';
+import style from './AlbumList.css';
 
 
 export const AlbumList = () => {
@@ -17,7 +17,7 @@ export const AlbumList = () => {
     <div>
       <h1>Список альбомів користувача</h1>
       <Link to="/">Повернутися до списку користувачів</Link>
-      <ul className="album-list">
+      <ul className={style["album-list"]}>
         {albums.map((album) => (
           <li key={album.id}>
             {album.title}
