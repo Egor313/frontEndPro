@@ -1,0 +1,9 @@
+.listTable {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.th {
+    border:  1px solid black;
+}
