@@ -74,5 +74,5 @@ export function EditForm () {
 function SaveButton () {
   const { isValid } = useFormikContext()
 
-  return <Button disabled={!isValid} type='submit'>Save</Button>
+  return <Button disabled={!isValid} htmlType='submit'>Save</Button>
 }
